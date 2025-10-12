@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnipSnap | Shorten Links in a Snap</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#6366f1',
+              secondary: '#f43f5e',
+            }
+          }
+        }
+      }
+    </script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, rgba(99,102,241,0.1) 0%, rgba(244,63,94,0.1) 100%);
+      }
+      .btn-primary {
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+      .link-card {
+        transition: all 0.3s ease;
+      }
+      .link-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+  <!-- Header -->
+  <header class="gradient-bg py-6 shadow-sm">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <i data-feather="scissors" class="text-primary w-8 h-8"></i>
+        <h1 class="text-2xl font-bold text-gray-800">SnipSnap</h1>
+      </div>
+      <nav class="hidden md:flex space-x-8">
+        <a href="#" class="text-gray-600 hover:text-primary transition">Features</a>
+        <a href="#" class="text-gray-600 hover:text-primary transition">Pricing</a>
+        <a href="#" class="text-gray-600 hover:text-primary transition">Analytics</a>
+        <a href="#" class="text-gray-600 hover:text-primary transition">API</a>
+      </nav>
+      <div class="flex items-center space-x-4">
+        <button class="px-4 py-2 text-gray-600 hover:text-primary transition">Login</button>
+        <button class="px-4 py-2 bg-primary text-white rounded-lg btn-primary">Sign Up</button>
+      </div>
+      <button class="md:hidden">
+        <i data-feather="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="py-16 gradient-bg">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Shorten, share and track <span class="text-primary">your links</span></h1>
+        <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">SnipSnap helps you create short links that are easy to share, track clicks, and analyze traffic - all for free!</p>
+        
+        <!-- URL Shortener Form -->
+        <div class="bg-white rounded-xl shadow-lg p-6 max-w-3xl mx-auto">
+          <div class="flex flex-col md:flex-row gap-4">
+            <input type="url" placeholder="Paste your long URL here" class="flex-grow px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+            <button id="run"  class="px-6 py-3 bg-primary text-white rounded-lg font-medium btn-primary whitespace-nowrap">Snip It!</button>
+          </div>
+          <div class="mt-4 text-left hidden" id="result-container">
+            <div class="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <i data-feather="link" class="text-primary"></i>
+                <span class="font-medium" id="short-url">snipsnap.com/xyz123</span>
+        </div>
+              <!-- Copy Button with Tooltip -->
+            <div class="relative group">
+                <button id="copy-btn" class="text-primary hover:text-secondary transition">
+                    <i data-feather="copy"></i>
+                </button>
+                <div id="copy-tooltip" class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition duration-200 pointer-events-none">Copied!
+                </div>
+            </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Powerful Features</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Everything you need to manage your links effectively</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-gray-50 rounded-xl p-8 link-card">
+          <div class="w-14 h-14 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+            <i data-feather="activity" class="text-primary w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Real-time Analytics</h3>
+          <p class="text-gray-600">Track clicks, geographic location, device type, and more for each shortened link.</p>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="bg-gray-50 rounded-xl p-8 link-card">
+          <div class="w-14 h-14 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+            <i data-feather="lock" class="text-secondary w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Password Protection</h3>
+          <p class="text-gray-600">Add an extra layer of security by password protecting your sensitive links.</p>
+        </div>
+        
+        <!-- Feature 3 -->
+        <div class="bg-gray-50 rounded-xl p-8 link-card">
+          <div class="w-14 h-14 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+            <i data-feather="calendar" class="text-primary w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Link Expiration</h3>
+          <p class="text-gray-600">Set expiration dates for temporary links that automatically stop working after a set time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">How It Works</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Shortening your links has never been easier</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Step 1 -->
+        <div class="text-center">
+          <div class="w-20 h-20 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">1</div>
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Paste Your URL</h3>
+          <p class="text-gray-600">Copy and paste your long URL into the shortening tool.</p>
+        </div>
+        
+        <!-- Step 2 -->
+        <div class="text-center">
+          <div class="w-20 h-20 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">2</div>
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Click Snip It!</h3>
+          <p class="text-gray-600">Our system will generate a unique shortened URL instantly.</p>
+        </div>
+        
+        <!-- Step 3 -->
+        <div class="text-center">
+          <div class="w-20 h-20 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">3</div>
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Share & Track</h3>
+          <p class="text-gray-600">Share your shortened link anywhere and track its performance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16 bg-primary text-white">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-6">Ready to start shortening?</h2>
+      <p class="text-primary-100 max-w-2xl mx-auto mb-10">Join thousands of businesses and individuals using SnipSnap to optimize their links.</p>
+      <button class="px-8 py-3 bg-white text-primary rounded-lg font-bold btn-primary">Get Started For Free</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center space-x-2 mb-4">
+            <i data-feather="scissors" class="text-white w-6 h-6"></i>
+            <h3 class="text-white text-xl font-bold">SnipSnap</h3>
+          </div>
+          <p class="mb-4">The simplest way to shorten links and track their performance.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="twitter"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="facebook"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="instagram"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="linkedin"></i></a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-bold mb-4">Product</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-white transition">Features</a></li>
+            <li><a href="#" class="hover:text-white transition">Pricing</a></li>
+            <li><a href="#" class="hover:text-white transition">API</a></li>
+            <li><a href="#" class="hover:text-white transition">Integrations</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-bold mb-4">Resources</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-white transition">Blog</a></li>
+            <li><a href="#" class="hover:text-white transition">Help Center</a></li>
+            <li><a href="#" class="hover:text-white transition">Developers</a></li>
+            <li><a href="#" class="hover:text-white transition">Status</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-bold mb-4">Company</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-white transition">About</a></li>
+            <li><a href="#" class="hover:text-white transition">Careers</a></li>
+            <li><a href="#" class="hover:text-white transition">Privacy</a></li>
+            <li><a href="#" class="hover:text-white transition">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-12 pt-8 text-sm text-center">
+        <p>© 2023 SnipSnap. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+      window.addEventListener('load', () => {
+     feather.replace();
+     });
+    const run_btn=document.getElementById('run').addEventListener('click', async function () {
+    const input = document.querySelector('input[type="url"]');
+    const longUrl = input.value.trim();
+    
+
+    
+
+
+    if (!longUrl) {
+      alert("Please enter a URL");
+      return;
+    }
+
+    try {
+      const response = await fetch('http://127.0.0.1:5000/shorten', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url: longUrl }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        document.getElementById('short-url').textContent = data.short_url;
+        document.getElementById('result-container').classList.remove('hidden');
+
+        // Rebind copy button logic
+        document.getElementById('copy-btn').onclick = function () {
+        navigator.clipboard.writeText(data.short_url);
+
+        const icon = this.querySelector('i');
+        if (icon){
+        icon.setAttribute('data-feather', 'check'); 
+        feather.replace();
+
+        setTimeout(() => {
+          icon.setAttribute('data-feather', 'copy');
+          feather.replace();
+        }, 2000);
+        
+        // Show tooltip
+        const tooltip = document.getElementById('copy-tooltip');
+        tooltip.classList.remove('opacity-0');
+        tooltip.classList.add('opacity-100');
+        // Hide it after 1.5 seconds
+        setTimeout(() => {
+            tooltip.classList.remove('opacity-100');
+            tooltip.classList.add('opacity-0');
+        }, 1500)
+    }
+        else{
+            console.warn('Icon not found inside copy button.');
+        }
+    }}
+    
+        
+        
+
+
+
+       else {
+        alert('Error: ' + data.error);
+      }
+
+    } catch (err) {
+      alert('Failed to shorten URL');
+      console.error(err);
+    }
+  });
+
+  const inputField = document.querySelector('input[type="url"]');
+  const snipButton = document.getElementById('run');
+
+  // Trigger snip when Enter is pressed
+  inputField.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // Prevent form submission or reload
+      snipButton.click();     // Trigger the same function as button click
+    }
+  });
+</script>
+
+
+
+</body>
+</html>
