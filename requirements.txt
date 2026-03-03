@@ -1,3 +1,0 @@
-Flask
-pyshorteners
-Flask-Cors
