@@ -1,0 +1,43 @@
+from flask import Flask, request, jsonify, render_template
+import pyshorteners
+from flask_cors import CORS
+import os
+import threading
+
+
+
+app = Flask(__name__)
+CORS(app)  # Allows frontend requests from different origins
+
+@app.route('/shorten', methods=['POST'])
+def shorten_url():
+    data = request.json
+    long_url = data.get('url')
+    s = pyshorteners.Shortener()
+    if not long_url:
+        return jsonify({'error': 'No URL provided'}), 400
+
+    try:
+        
+        short_url = s.dagd.short(long_url)
+        return jsonify({'short_url': short_url})
+    except:
+        try:
+            short_url = s.isgd.short(long_url)
+            return jsonify({'short_url': short_url})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+
+def restart():
+    print('Restarting Server...')
+    os._exit(0)
+threading.Timer(14*60,restart).start()
+
+if __name__ == '__main__':
+    import os
+    port = int(os.environ.get('PORT', 8080)) 
+    app.run(host='0.0.0.0', port=port,debug=False)
